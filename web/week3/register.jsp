@@ -75,7 +75,7 @@
     </script>
 </head>
 <body>
-<form action="/ChenYuepan/show" method="post">
+<form action="/2022211001000203ChenYuepan/register" method="post">
     <h3 class="text">New User Registration!</h3>
     <ul>
         <li><input id="username" type="text" name="username" placeholder="Username" class="da"></li>
