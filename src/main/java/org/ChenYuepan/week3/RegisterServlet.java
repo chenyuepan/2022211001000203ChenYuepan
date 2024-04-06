@@ -1,4 +1,4 @@
-package org.example.servlet;
+package org.ChenYuepan.week3;
 
 import org.example.utils.TimeUtil;
 
@@ -16,17 +16,18 @@ public class RegisterServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        connection=(Connection) getServletContext().getAttribute("con");
 
-        String driver = getServletContext().getInitParameter("driver");
-        String url = getServletContext().getInitParameter("url");
-        String username = getServletContext().getInitParameter("Username");
-        String password = getServletContext().getInitParameter("Password");
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+//        String driver = getServletContext().getInitParameter("driver");
+//        String url = getServletContext().getInitParameter("url");
+//        String username = getServletContext().getInitParameter("Username");
+//        String password = getServletContext().getInitParameter("Password");
+//        try {
+//            Class.forName(driver);
+//            connection = DriverManager.getConnection(url, username, password);
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,44 +65,47 @@ public class RegisterServlet extends HttpServlet {
             }else {
                 System.out.println("添加失败");
             }
+
+            request.setAttribute("con",connection);
+            response.sendRedirect("login.jsp");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
 
         // Select all rows from "usertable"
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM usertable");
-            ResultSet resultSet = statement.executeQuery();
-
-
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.println("<html><body>");
-            out.println("<table border='1'>" +
-                    "<tr>" +
-                    "<th>ID</th>" +
-                    "<th>UserName</th>" +
-                    "<th>Password</th>" +
-                    "<th>Email</th>" +
-                    "<th>Gender</th>" +
-                    "<th>Birthdate</th>" +
-                    "</tr>");
-            while (resultSet.next()) {
-                out.println("<tr><td>"
-                        + resultSet.getInt("id") + "</td><td>"
-                        + resultSet.getString("username") + "</td><td>"
-                        + resultSet.getString("u_password") + "</td><td>"
-                        + resultSet.getString("email") + "</td><td>"
-                        + resultSet.getString("gender") + "</td><td>"
-                        + resultSet.getString("birth")
-                        + "</td></tr>");
-            }
-            out.println("</table>");
-            out.println("</body></html>");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            PreparedStatement statement = connection.prepareStatement("SELECT * FROM usertable");
+//            ResultSet resultSet = statement.executeQuery();
+//
+//
+//            response.setContentType("text/html");
+//            PrintWriter out = response.getWriter();
+//            out.println("<html><body>");
+//            out.println("<table border='1'>" +
+//                    "<tr>" +
+//                    "<th>ID</th>" +
+//                    "<th>UserName</th>" +
+//                    "<th>Password</th>" +
+//                    "<th>Email</th>" +
+//                    "<th>Gender</th>" +
+//                    "<th>Birthdate</th>" +
+//                    "</tr>");
+//            while (resultSet.next()) {
+//                out.println("<tr><td>"
+//                        + resultSet.getInt("id") + "</td><td>"
+//                        + resultSet.getString("username") + "</td><td>"
+//                        + resultSet.getString("u_password") + "</td><td>"
+//                        + resultSet.getString("email") + "</td><td>"
+//                        + resultSet.getString("gender") + "</td><td>"
+//                        + resultSet.getString("birth")
+//                        + "</td></tr>");
+//            }
+//            out.println("</table>");
+//            out.println("</body></html>");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void destroy() {

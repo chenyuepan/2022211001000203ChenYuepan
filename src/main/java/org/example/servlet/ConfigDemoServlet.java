@@ -8,8 +8,8 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "ConfigDemoServlet", urlPatterns = "/config",
         initParams = {
-                @WebInitParam(name = "name1", value = "Chen Yuepan"),
-                @WebInitParam(name = "studentid1", value = "2022211001000203")
+                @WebInitParam(name = "name1", value = "Jiang Qing"),
+                @WebInitParam(name = "studentid1", value = "2022211007000128")
         })
 public class ConfigDemoServlet extends HttpServlet {
     @Override
@@ -30,12 +30,12 @@ public class ConfigDemoServlet extends HttpServlet {
         String name = config.getInitParameter("name1");
         String id1 = config.getInitParameter("studentid1");
 
-        response.setContentType("text/html");
-        out.println("<html><body>");
-        out.println("<h2>Task 2-Get init parameters from @WebServlet</h2>");
-        out.println("name: " + name + "<br>");
-        out.println("student id: " + id1);
-        out.println("</body></html>");
+//        response.setContentType("text/html");
+//        out.println("<html><body>");
+//        out.println("<h2>Task 2-Get init parameters from @WebServlet</h2>");
+//        out.println("name: " + name + "<br>");
+//        out.println("student id: " + id1);
+//        out.println("</body></html>");
     }
 
     @Override

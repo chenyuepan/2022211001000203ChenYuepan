@@ -51,11 +51,11 @@
         <servlet-class>org.example.servlet.ConfigDemoServlet</servlet-class>
         <init-param>
             <param-name>name</param-name>
-            <param-value>Chen Yuepan</param-value>
+            <param-value>Jiang Qing</param-value>
         </init-param>
         <init-param>
             <param-name>studentid</param-name>
-            <param-value>2022211001000203</param-value>
+            <param-value>2022211007000128</param-value>
         </init-param>
     </servlet>
 
