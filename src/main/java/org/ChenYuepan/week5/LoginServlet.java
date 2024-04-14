@@ -1,5 +1,8 @@
 package org.ChenYuepan.week5;
 
+import org.ChenYuepan.dao.UserDao;
+import org.ChenYuepan.model.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -18,12 +21,18 @@ public class LoginServlet extends HttpServlet {
         String url = getServletContext().getInitParameter("url");
         String username = getServletContext().getInitParameter("Username");
         String password = getServletContext().getInitParameter("Password");
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class.forName(driver);
+//            connection = DriverManager.getConnection(url, username, password);
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+        connection=(Connection) getServletContext().getAttribute("con");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req,resp);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,24 +46,33 @@ public class LoginServlet extends HttpServlet {
 
         //使用预sql进行编译，解决sql注入问题
         try {
-
-            PreparedStatement getCount = connection.prepareStatement("select * from usertable where username= ? and u_password= ?");
-            getCount.setString(1,username);
-            getCount.setString(2,password);
-            ResultSet resultSet = getCount.executeQuery();
-            if (resultSet.next()){
-                request.setAttribute("id",resultSet.getInt("id"));
-                request.setAttribute("username",resultSet.getString("username"));
-                request.setAttribute("password",resultSet.getString("u_password"));
-                request.setAttribute("email",resultSet.getString("email"));
-                request.setAttribute("gender",resultSet.getString("gender"));
-                request.setAttribute("birthDate",resultSet.getString("birth"));
-
-                request.getRequestDispatcher("/week5/userinfo.jsp").forward(request,response);
-                count++;
-            }else {
+//
+//            PreparedStatement getCount = connection.prepareStatement("select * from usertable where username= ? and u_password= ?");
+//            getCount.setString(1,username);
+//            getCount.setString(2,password);
+//            ResultSet resultSet = getCount.executeQuery();
+//            if (resultSet.next()){
+//                request.setAttribute("id",resultSet.getInt("id"));
+//                request.setAttribute("username",resultSet.getString("username"));
+//                request.setAttribute("password",resultSet.getString("u_password"));
+//                request.setAttribute("email",resultSet.getString("email"));
+//                request.setAttribute("gender",resultSet.getString("gender"));
+//                request.setAttribute("birthDate",resultSet.getString("birth"));
+//
+//                request.getRequestDispatcher("/week5/userinfo.jsp").forward(request,response);
+//                count++;
+//            }else {
+//                request.setAttribute("message","Username or Password Error!!!");
+//                request.getRequestDispatcher("week5/login.jsp").forward(request,response);
+//            }
+            UserDao userDao=new UserDao();
+            User user = userDao.findByUsernamePassword(connection, username, password);
+            if(user!=null){
+                request.setAttribute("user",user);
+                request.getRequestDispatcher("/WEB-INF/views/userinfo.jsp").forward(request,response);
+            }else{
                 request.setAttribute("message","Username or Password Error!!!");
-                request.getRequestDispatcher("week5/login.jsp").forward(request,response);
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request,response);
             }
 //            response.setContentType("text/html");
 //            PrintWriter out = response.getWriter();

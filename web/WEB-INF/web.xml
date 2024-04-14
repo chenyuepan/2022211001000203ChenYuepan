@@ -46,18 +46,7 @@
 
 <!--    第4周作业部分 -->
 
-    <servlet>
-        <servlet-name>ConfigDemoServlet</servlet-name>
-        <servlet-class>org.example.servlet.ConfigDemoServlet</servlet-class>
-        <init-param>
-            <param-name>name</param-name>
-            <param-value>Jiang Qing</param-value>
-        </init-param>
-        <init-param>
-            <param-name>studentid</param-name>
-            <param-value>2022211007000128</param-value>
-        </init-param>
-    </servlet>
+
 
     <servlet-mapping>
         <servlet-name>ConfigDemoServlet</servlet-name>
